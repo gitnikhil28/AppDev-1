@@ -1,4 +1,4 @@
-# Influencer-Sponsor Coordination Platform (Version 1)
+# Influencer-Sponsor Coordination Platform 
 
 This platform streamlines the process of connecting influencers with sponsors for mutually beneficial collaborations.
 
