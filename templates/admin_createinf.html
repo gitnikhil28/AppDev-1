@@ -1,0 +1,92 @@
+{% extends 'admin_dash.html' %}
+
+{% block title %}
+Influencer Registeration
+{% endblock %}
+
+{% block content %}
+
+<h1>Add an Influencer</h1>
+
+<div class="container">
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <div class="flash-message" role="alert">
+        {% for message in messages %}
+          <p>{{ message }}</p>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+
+<br>
+<form method="POST" >
+    <label form="username" class = "form-label"> Create Username 
+    <input type = "text" name = "username" id="username" class = "form-control" required />
+    </label>
+
+    <label form="name" class = "form-label"> Name 
+      <input type = "text" name = "name" id="username" class = "form-control" required />
+      </label>
+    
+  
+    <label form="niche" class = "form-label"> Niche
+      <input type = "text" name = "niche" id="username" class = "form-control" required />
+      </label>
+    
+    <label form="reach" class = "form-label"> Reach
+      <input type = "text" name = "reach" id="username" class = "form-control" required />
+      </label>
+     
+    
+    <label form="password" class = "form-label"> Password 
+    <input type = "password" name = "password" id="password" class = "form-control" required/>
+    </label>
+
+    <label form="re-password" class = "form-label"> Confirm Password 
+      <input type = "password" name = "repassword" id="repassword" class = "form-control" required />
+      </label>
+    
+      <label class="form-label">Choose platform with maximum reach</label>
+      <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+        <input type="radio" class="btn-check" name="platform" id="btnradio1" value="Youtube" autocomplete="off" checked>
+        <label class="btn btn-outline-primary" for="btnradio1">Youtube</label>
+        
+        <input type="radio" class="btn-check" name="platform" id="btnradio2" value="Instagram" autocomplete="off">
+        <label class="btn btn-outline-primary" for="btnradio2">Instagram</label>
+        
+        <input type="radio" class="btn-check" name="platform" id="btnradio3" value="Facebook" autocomplete="off">
+        <label class="btn btn-outline-primary" for="btnradio3">Facebook</label>
+      </div>
+    <br>
+    <input type="submit" value = "Register" class = "mt-2 btn btn-success">
+
+</form>
+{% endblock %}
+
+{% block style %}
+<style>
+  form{
+    display : flex;
+    flex-direction:column ;
+    align-items: center;
+  }
+
+  h1{
+    margin-top: 30px;
+    text-align: center;
+  }
+  
+  .flash-message {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 5px; 
+    text-align: center;
+    margin: 10px auto; 
+    border: 1px solid #f5c6cb;
+    border-radius: 10px;
+    width: 80%; 
+    max-width: 400px; 
+}
+</style>
+{% endblock %}

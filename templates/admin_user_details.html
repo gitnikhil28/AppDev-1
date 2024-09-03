@@ -1,0 +1,25 @@
+{% extends 'admin_dash.html' %}
+
+{% block content %}
+
+<h2>User Details</h2>
+
+<p><strong>Username:</strong> {{ user.username }}</p>
+<p><strong>Role:</strong> {{ user.role }}</p>
+
+{% if user.role == 'sponsor' %}
+    <p><strong>Company Name:</strong> {{ user.sponsor.company_name }}</p>
+    <p><strong>Industry:</strong> {{ user.sponsor.industry }}</p>
+    <p><strong>Budget:</strong> {{ user.sponsor.budget }}</p>
+    <p><strong>Flagged:</strong> {% if user.sponsor.is_flag %}Yes{% else %}No{% endif %}</p>
+{% else %}
+    <p><strong>Name:</strong> {{ user.influencer.name }}</p>
+    <p><strong>Niche:</strong> {{ user.influencer.niche }}</p>
+    <p><strong>Reach:</strong> {{ user.influencer.reach }}</p>
+    <p><strong>Rating:</strong> {{ user.influencer.Rating }}</p>
+    <p><strong>Flagged:</strong> {% if user.influencer.is_flag %}Yes{% else %}No{% endif %}</p>
+{% endif %}
+
+<a href="{{ url_for('admin_users') }}" class="btn btn-secondary mt-2">Back to User List</a>
+
+{% endblock %}

@@ -1,0 +1,147 @@
+{% extends 'spndash.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h3 class="mb-4">{{sponsor.user.username}} Statistics</h3>
+    <br>
+    <br>
+    <div class="row">
+        <h5>Amount Spent</h5>
+        <p>Total Amount Spent: ${{ total_amount_spent }}</p>
+        <hr>
+        <div class="col-md-6">
+            <h5>Reach by each campaign</h5>
+            <p>Total Reach: {{ total_reach }} users</p>
+            <div class="chart-container">
+                <canvas id="reachChart"></canvas>
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <h5>Budget for Campaigns</h5>
+            <div class="chart-container">
+              <canvas id="campaignsChart"></canvas>
+            </div>
+        </div>
+        <hr>
+        
+        <h5>Ad Requests for each campaign</h5>
+        <div class="chart-container">
+        <canvas id="adRequestsChart"></canvas>
+        </div>
+        <hr>
+        
+        
+    </div>
+    
+</div>
+{% endblock %}
+
+{% block script %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Campaigns Chart
+    const campaignsCtx = document.getElementById('campaignsChart').getContext('2d');
+    const campaignsChart = new Chart(campaignsCtx, {
+        type: 'bar',
+        data: {
+            labels: {{ campaign_names|tojson }},
+            datasets: [{
+                label: 'Budget',
+                data: {{ campaign_budgets|tojson }},
+                backgroundColor: 'lightblue'
+            }]
+        },
+        options: {
+            maintainAspectRatio: true,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            },
+            barPercentage: 0.35,  
+            categoryPercentage: 0.35
+        }
+    });
+
+    // Ad Requests Chart
+    const adRequestsCtx = document.getElementById('adRequestsChart').getContext('2d');
+    const adRequestsChart = new Chart(adRequestsCtx, {
+        type: 'bar',
+        data: {
+            labels: {{ campaign_names|tojson }},
+            datasets: [{
+                label: 'Ad Requests',
+                data: {{ ad_requests_counts|tojson }},
+                backgroundColor: 'orange'
+            }]
+        },
+        options: {
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                }
+            },
+            scales: {
+                y: {
+                    min: 0,
+                    max: 10,
+                    ticks: {
+                        stepSize: 2
+                    }
+                }
+            },
+            barPercentage: 0.35,  
+            categoryPercentage: 0.35
+
+        }
+    });
+    // Reach Chart
+    const reachCtx = document.getElementById('reachChart').getContext('2d');
+    const reachChart = new Chart(reachCtx, {
+        type: 'bar',
+        data: {
+            labels: {{ campaign_names|tojson }},
+            datasets: [{
+                label: 'Reach',
+                data: {{ campaign_reaches|tojson }},
+                backgroundColor: 'green'
+            }]
+        },
+        options: {
+            maintainAspectRatio: true,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            },
+            barPercentage: 0.35,
+            categoryPercentage: 0.35
+        }
+    });
+</script>
+{% endblock script %}
+{% block style %}
+<style>
+
+    body {
+        background: linear-gradient(135deg, #010515 0%, #220341e5 100%);
+            color: #fff;
+      }
+    h3{
+        margin-top: 20px;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    h4{
+        margin-top: 30px;
+     
+    }
+    .chart-container {
+        position: relative;
+        height: 300px;
+        width: 400px;
+    }
+</style>
+{% endblock style %}

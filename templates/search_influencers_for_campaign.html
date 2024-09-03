@@ -1,0 +1,103 @@
+{% extends 'spndash.html' %}
+
+{% block content %}
+<div class="container">
+    <h4 class="my-4 text-center">Find Influencers for Campaign: {{ campaign.name }}</h4>
+
+    <form method="GET" action="{{ url_for('search_influencers_for_campaign', campaign_id=campaign.id) }}">
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <label for="search" class="form-label">Name or Username:</label>
+                <input type="text" class="form-control" id="search" name="search" placeholder="Search..." value="{{ request.args.get('search', '') }}">
+            </div>
+            <div class="col-md-3">
+                <label for="niche" class="form-label">Niche:</label>
+                <select name="niche" id="niche" class="form-select">
+                    <option value="">All Niches</option> 
+                    {% for niche in niches %}
+                        <option value="{{ niche }}" {% if request.args.get('niche') == niche %}selected{% endif %}>{{ niche }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label for="min_reach" class="form-label">Minimum Reach:</label> 
+                <input type="number" class="form-control" id="min_reach" name="min_reach" placeholder="Enter minimum reach" value="{{ request.args.get('min_reach', 0) }}">
+            </div>
+            <div class="col-md-2 d-flex align-items-end">
+                <button type="submit" class="btn btn-primary me-2">Filter</button>
+                <a href="{{ url_for('search_influencers_for_campaign', campaign_id=campaign.id) }}" class="btn btn-secondary">Clear</a>
+            </div>
+        </div>
+    </form>
+
+    {% if influencers %}
+        <div class="row">
+            {% for influencer in influencers %}
+                <div class="col-md-6 mb-3">
+                    <div class="card h-100 d-flex flex-row align-items-center">
+                        {% if influencer.profile_picture %} 
+                            <img src="{{ url_for('static', filename='uploads/' + influencer.profile_picture) }}" class="card-img-left" alt="Profile Picture">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ influencer.name }} ({{ influencer.user.username }})</h5>
+                            <p class="card-text">Niche: {{ influencer.niche }}</p>
+                            <p class="card-text">Reach: {{ influencer.reach }}</p>
+                            <a href="{{ url_for('create_ad_request', campaign_id=campaign.id, influencer_id=influencer.id) }}" class="btn btn-primary btn-sm">Assign Influencer</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="mt-2 text-center">No influencers found.</p>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block style %}
+<style>
+    body {
+        background: linear-gradient(135deg, #010515 0%, #220341e5 100%);
+            color: #fff;
+      }
+    .container {
+        max-width: 800px;
+        margin: auto;
+    }
+
+    .card {
+        border-radius: 10px;
+        overflow: hidden;
+        
+    }
+
+    .card-img-left {
+        width: 150px;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .card-body {
+        padding: 15px;
+    }
+
+    .card-title {
+        font-size: 1.25rem;
+        margin-bottom: 10px;
+    }
+
+    .btn {
+        margin-top: 5px;
+    }
+
+    .row {
+        margin-left: -5px;
+        margin-right: -5px;
+    }
+
+    .col-md-4, .col-md-3, .col-md-2 {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+</style>
+{% endblock %}

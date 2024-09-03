@@ -1,0 +1,126 @@
+{% extends 'admin_dash.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h4>All Campaigns</h4>
+
+    <form method="GET" action="{{ url_for('admin_campaigns') }}">
+        <div class="row mb-3">
+            <div class="col-md-5">
+                <label for="search" class="form-label">Search by name:</label>
+                <input type="text" class="form-control" id="search" name="search" placeholder="Search..." value="{{ request.args.get('search', '') }}">
+            </div>
+            <div class="col-md-5">
+                <label for="niche" class="form-label">Niche:</label>
+                <select name="niche" id="niche" class="form-select">
+                    <option value="">All Niches</option>
+                    {% for niche in niches %}
+                        <option value="{{ niche }}" {% if request.args.get('niche') == niche %}selected{% endif %}>{{ niche }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-2 d-flex align-items-end">
+                <button type="submit" class="btn btn-primary me-2">Filter</button>
+                <a href="{{ url_for('admin_campaigns') }}" class="btn btn-secondary mt-2">Clear</a>
+            </div>
+        </div>
+    </form>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Campaign ID</th>
+                <th>Name</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for campaign in campaigns %}
+                <tr>
+                    <td>{{ campaign.id }}</td>
+                    <td>{{ campaign.name }}</td>
+                    <td>{{ campaign.start_date }}</td>
+                    <td>{{ campaign.end_date }}</td>
+                    <td>
+                        <div class="d-flex">
+                            <a href="{{ url_for('admin_campaign_details', campaign_id=campaign.id) }}" class="btn btn-secondary btn-sm me-2">View Details</a>
+                            <form method="POST" action="{{ url_for('flag_campaign', campaign_id=campaign.id) }}">
+                                <button type="submit" class="btn btn-{% if campaign.is_flag %}success{% else %}danger{% endif %} btn-sm">
+                                    {% if campaign.is_flag %}Unflag{% else %}Flag{% endif %} Campaign
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+{% block style %}
+<style>
+  body {
+    background: linear-gradient(135deg, #010515 0%, #220341e5 100%);
+        color: #fff;
+  }
+  form{
+    display : flex;
+    flex-direction:column ;
+    align-items: center;
+  }
+
+  h1{
+    margin-top: 30px;
+    text-align: center;
+  }
+  h3{
+    margin-top: 10px;
+    
+  }
+  h4{
+    margin-top: 10px;
+    margin-bottom: 15px;
+    text-align: center; 
+  }
+  p{
+    
+    text-align: center;
+  }
+  .flash-message {
+    
+    color: #721c24;
+    padding: 5px;
+    text-align: center;
+    margin: 5px auto;
+    
+    border-radius: 5px;
+    width: fit-content;
+  }
+  .d-inline-flex{ 
+    background-color: yellow; 
+    color: #0d0808 !important;          
+    padding: 0.5rem 1rem !important;   
+    border-radius: 1px !important;      
+  }
+  .campaign-name {
+    margin-right: 15px;
+    
+}
+.progress {
+  height: 25px; 
+  border-radius: 5px;
+  width: 200%; 
+}
+.custom-bar .btn {
+  margin-left: 0.5rem;
+}
+.mb-0{
+  margin-right: 80px;
+}
+.progress-custom-width {
+  width: 300px; 
+}
+</style>
+{% endblock %}

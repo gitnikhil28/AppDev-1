@@ -1,0 +1,82 @@
+{% extends 'ifndash.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h4 class="text-center mb-4">Find Campaigns</h4>
+
+    <form method="GET" action="{{ url_for('inf_find') }}">
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <label for="search" class="form-label">Name of Campaign:</label>
+                <input type="text" class="form-control" name="search" placeholder="Search by name" value="{{ request.args.get('search', '') }}">
+            </div>
+            <div class="col-md-3">
+                <label for="niche" class="form-label">Niche:</label>
+                <select name="niche" class="form-select">
+                    <option value="">All Niches</option>
+                    {% for niche in niches %}
+                        <option value="{{ niche }}" {% if request.args.get('niche') == niche %}selected{% endif %}>{{ niche }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-2 d-flex align-items-end">
+                <button type="submit" class="btn btn-primary w-100">Filter</button>
+            </div>
+            
+        </div>
+    </form>
+
+    {% if campaigns %}
+        <div class="row">
+            {% for campaign in campaigns %}
+                <div class="col-md-4 mb-3">
+                    <div class="card h-100">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title mb-2">{{ campaign.name }} - {{ campaign.sponsor.user.username }}</h5>
+                            <p class="card-text mb-3">{{ campaign.description }}</p>
+                            <div class="d-flex justify-content-between mt-auto">
+                                <a href="{{ url_for('inf_campaign_details', campaign_id=campaign.id) }}" class="btn btn-secondary btn-sm">View Details</a>
+                                <a href="{{ url_for('create_ad_request_influencer', campaign_id=campaign.id) }}" class="btn btn-primary btn-sm">Send Ad Request</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="text-center mt-2">No campaigns available.</p>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block style %}
+<style>
+
+    body{
+        background: linear-gradient(135deg, #010515 0%, #220341e5 100%);
+        color: #fff;
+    }
+  h4 {
+    margin-top: 30px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .card {
+    border-radius: 0.5rem;
+  }
+
+  .card-body {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .btn {
+    width: 100%;
+    text-align: center;
+  }
+  .btn-secondary{
+    margin-right: 5px;
+  }
+</style>
+{% endblock %}

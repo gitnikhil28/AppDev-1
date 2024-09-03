@@ -1,0 +1,118 @@
+{% extends 'ifndash.html' %}
+
+{% block content %}
+<div class="container mt-4 ">
+    <!-- Profile Section -->
+    <div class="card mb-4 custom">
+        <div class="row g-0">
+            <div class="col-md-4 d-flex justify-content-center align-items-center">
+                {% if influencer.profile_picture %}
+                    <img src="{{ url_for('static', filename='uploads/' + influencer.profile_picture) }}" class="img-fluid rounded-start" alt="Profile Picture">
+                {% else %}
+                    <div class="placeholder-image d-flex justify-content-center align-items-center">
+                        No Image
+                    </div>
+                {% endif %}
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">Welcome, {{ influencer.user.username }}!</h5>
+                    <a href="{{ url_for('edit_influencer_profile') }}" class="btn btn-success mt-2">Edit Profile</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Active Campaigns Section -->
+    <div>
+        <h5 class="mb-3" ml-5>Active Campaigns</h5>
+        {% if active_campaigns %}
+            <ul class="list-unstyled">
+                {% for campaign in active_campaigns %}
+                    <li class="mb-3">
+                        <div class="d-flex align-items-center justify-content-between p-2 border rounded">
+                            <span class="campaign-name">{{ campaign.name }}</span>
+                            <div class="progress-bar-container">
+                                <div class="progress" role="progressbar" aria-valuenow="{{ campaign_progress(campaign) }}" aria-valuemin="0" aria-valuemax="100">
+                                    <div class="progress-bar" style="width: {{ campaign_progress(campaign) }}%;">
+                                        {{ campaign_progress(campaign) }}%
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="{{ url_for('inf_campaign_details', campaign_id=campaign.id) }}" class="btn btn-secondary btn-sm">View</a>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="text-center">No active campaigns.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block style %}
+<style>
+
+  .custom{
+    background-color: #010515;
+    color: white;
+  }
+  body{
+    background: linear-gradient(135deg, #010515 0%, #220341e5 100%);
+        color: #fff;
+}
+
+  .card {
+    border-radius: 0.5rem;
+  }
+
+  .placeholder-image {
+    width: 100%;
+    height: 100px;
+    background-color: #e0e0e0;
+    color: #999;
+    border-radius: 0.5rem;
+    text-align: center;
+    line-height: 100px;
+    font-size: 1rem;
+  }
+
+  .campaign-name {
+    flex: 1;
+    font-weight: bold;
+  }
+
+  .progress-bar-container {
+    flex: 2;
+    margin-left: 1rem;
+  }
+
+  .progress {
+    height: 25px;
+    border-radius: 5px;
+    background-color: whitesmoke;
+  }
+
+  .progress-bar {
+    height: 100%;
+    border-radius: 5px;
+    background-color: blue;
+    color: white;
+    text-align: center;
+    line-height: 25px;
+  }
+
+  .btn-primary {
+    margin-top: 1rem;
+  }
+
+  .btn-secondary {
+    margin-left: 0.5rem;
+  }
+
+  .list-unstyled {
+    padding-left: 0;
+  }
+</style>
+{% endblock %}

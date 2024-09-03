@@ -1,0 +1,127 @@
+{% extends 'admin_dash.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h4>All Users</h4>
+
+    <form method="GET" action="{{ url_for('admin_users') }}">
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <label for="search" class="form-label">Name or username:</label>
+                <input type="text" class="form-control" id="search" name="search" placeholder="Search..." value="{{ request.args.get('search', '') }}">
+            </div>
+            <div class="col-md-3">
+                <label for="role" class="form-label">Role:</label>
+                <select name="role" id="role" class="form-select">
+                    <option value="">All Roles</option>
+                    <option value="influencer" {% if request.args.get('role') == 'influencer' %}selected{% endif %}>Influencer</option>
+                    <option value="sponsor" {% if request.args.get('role') == 'sponsor' %}selected{% endif %}>Sponsor</option>
+                </select>
+            </div>
+            <div class="col-md-2 d-flex align-items-end">
+                <button type="submit" class="btn btn-primary me-2">Filter</button>
+                <a href="{{ url_for('admin_users') }}" class="btn btn-secondary mt-2">Clear</a>
+            </div>
+        </div>
+    </form>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>User ID</th>
+                <th>Username</th>
+                <th>Role</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.role }}</td>
+                    <td>
+                        <div class="d-flex ">  
+                            <a href="{{ url_for('admin_user_details', user_id=user.id) }}" class="btn btn-secondary btn-sm me-2">View Details</a> 
+
+                            <form method="POST" action="{{ url_for('flag_user', user_id=user.id) }}">
+                                <button type="submit" class="btn btn-{% if user.role == 'sponsor' and user.sponsor.is_flag or user.role == 'influencer' and user.influencer.is_flag %}success{% else %}danger{% endif %} btn-sm">
+                                    {% if user.role == 'sponsor' and user.sponsor.is_flag or user.role == 'influencer' and user.influencer.is_flag %}Unflag{% else %}Flag{% endif %} User
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+
+{% block style %}
+<style>
+  body {
+    background: linear-gradient(135deg, #010515 0%, #220341e5 100%);
+        color: #fff;
+  }
+  form{
+    display : flex;
+    flex-direction:column ;
+    align-items: center;
+  }
+
+  h1{
+    margin-top: 30px;
+    text-align: center;
+  }
+  h3{
+    margin-top: 10px;
+    
+  }
+  h4{
+    margin-top: 10px;
+    margin-bottom: 15px;
+    text-align: center; 
+  }
+  p{
+    
+    text-align: center;
+  }
+  .flash-message {
+    
+    color: #721c24;
+    padding: 5px;
+    text-align: center;
+    margin: 5px auto;
+    
+    border-radius: 5px;
+    width: fit-content;
+  }
+  .d-inline-flex{ 
+    background-color: hwb(69 0% 0%) !important;
+    color: #0d0808 !important;          
+    padding: 0.5rem 1rem !important;   
+    border-radius: 1px !important;      
+  }
+  .campaign-name {
+    margin-right: 15px;
+    
+  }
+  .progress {
+    height: 25px; 
+    border-radius: 5px;
+    width: 200%; 
+  }
+  .custom-bar .btn {
+    margin-left: 0.5rem;
+  }
+  .mb-0{
+    margin-right: 80px;
+  }
+  .progress-custom-width {
+    width: 300px;
+
+  .
+}
+</style>
+{% endblock %}

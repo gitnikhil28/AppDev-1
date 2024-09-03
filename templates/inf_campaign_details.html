@@ -1,0 +1,83 @@
+{% extends 'ifndash.html' %}
+
+
+{% block content %}
+
+<h4>Campaign Details</h4>
+<p><strong>Title:</strong> {{ campaign.name }}</p>
+<p><strong>Budget:</strong> {{ campaign.budget }}</p>
+<p><strong>Start Date:</strong> {{ campaign.start_date }}</p>
+<p><strong>End Date:</strong> {{ campaign.end_date }}</p>
+
+
+
+    
+{% endblock content %}
+
+{% block style %}
+<style>
+
+  body{
+    background-color: rgba(0, 0, 0, 0.817);
+    color: white;
+}
+  form{
+    display : flex;
+    flex-direction:column ;
+    align-items: center;
+  }
+
+  h1{
+    margin-top: 30px;
+    text-align: center;
+  }
+  h4{
+    margin-top: 5px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  h3{
+    margin-top: 10px;
+    margin-left: 25px;
+  }
+  p{
+    
+    text-align: center;
+  }
+  .flash-message {
+    
+    color: #721c24;
+    padding: 5px;
+    text-align: center;
+    margin: 5px auto;
+    
+    border-radius: 5px;
+    width: fit-content;
+  }
+  .d-inline-flex{ 
+    background-color: yellow
+             
+    padding: 0.5rem 1rem ;   
+    border-radius: 1px ;      
+  }
+  .campaign-name {
+    margin-right: 15px; 
+    
+}
+.progress {
+  height: 25px; 
+  border-radius: 5px;
+  width: 200%; 
+}
+.custom-bar .btn {
+  margin-left: 0.5rem;
+}
+.mb-0{
+  margin-right: 80px;
+}
+.progress-custom-width {
+  width: 300px; 
+}
+</style>
+{% endblock %}

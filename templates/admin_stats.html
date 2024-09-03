@@ -1,0 +1,256 @@
+
+{% extends 'admin_dash.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h3>User Statistics</h3>
+    <div class="row">
+        <div class="col-md-6">
+            <h5>Total Users Distribution</h5>
+            <div class="chart-container">
+                <canvas id="usersDistributionChart"></canvas>
+            </div>
+        </div>
+        <div class="col-md-6" >
+            <h5>Flagged Sponsors/Influencers</h5>
+            <div class="chart-container">
+              <canvas id="flaggedUsersChart"></canvas>
+            </div>
+        </div>
+        <br>
+        <br>
+        <div class="col-md-6" mt-5>
+            <h5>Active Users</h5>
+            <div class="chart-container">
+                <canvas id="activeUsersChart"></canvas>
+            </div>
+        </div>
+        
+    </div>
+    <hr>
+    <hr>
+    <h3 class="mt-4">Campaign Statistics</h3>
+    <div class="row">
+        <div class="col-md-6">
+            <h5>Campaign Status</h5>
+            <div class="chart-container">
+                <canvas id="campaignStatusChart"></canvas>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h5>Campaigns by Niche</h5>
+            <div class="chart-container">
+                <canvas id="campaignsByNicheChart"></canvas>
+            </div>
+        </div>
+    </div>
+    <hr>
+
+    <h3 class="mt-4">Ad Requests Statistics</h3>
+    <div class="row">
+        <div class="col-md-6">
+            <h5>Ad Requests Status</h5>
+            <div class="chart-container">
+                <canvas id="adRequestsStatusChart"></canvas>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h5>Ad Requests by Influencer</h5>
+            <div class="chart-container">
+                <canvas id="adRequestsByInfluencerChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block script %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Total Users Distribution
+    const usersDistributionCtx = document.getElementById('usersDistributionChart').getContext('2d');
+    const usersDistributionChart = new Chart(usersDistributionCtx, {
+        type: 'pie',
+        data: {
+            labels: ['Influencers', 'Sponsors'],
+            datasets: [{
+                data: [{{ total_influencers }}, {{ total_sponsors }}],
+                backgroundColor: ['lightblue', 'green']
+            }]
+        },
+        options: {
+            maintainAspectRatio: false
+        }
+    });
+
+    // Active Users
+    const activeUsersCtx = document.getElementById('activeUsersChart').getContext('2d');
+    const activeUsersChart = new Chart(activeUsersCtx, {
+        type: 'bar',
+        data: {
+            labels: ['Influencers', 'Sponsors'],
+            datasets: [
+                {
+                    label: 'Total Users',
+                    data: [{{ total_influencers }}, {{ total_sponsors }}],
+                    backgroundColor: 'green'
+                },
+                {
+                    label: 'Active Users',
+                    data: [{{ active_influencers }}, {{ active_sponsors }}],
+                    backgroundColor: 'lightblue'
+                }
+            ]
+        },
+        options: {
+            maintainAspectRatio: false,
+            scales: {
+                x: {
+                    stacked: true
+                },
+                y: {
+                    stacked: true,
+                    ticks: {
+                        min: 0,
+                        max: 10,
+                        stepSize: 2
+                    }
+                }
+            }
+        }
+    });
+            
+
+    const flaggedUsersCtx = document.getElementById('flaggedUsersChart').getContext('2d');
+    const flaggedUsersChart = new Chart(flaggedUsersCtx, {
+        type: 'bar',
+        data: {
+            labels: ['Influencers', 'Sponsors'],
+            datasets: [{
+                label: 'Flagged Users',
+                data: [{{ flagged_influencers_count }}, {{ flagged_sponsors_count }}],
+                backgroundColor: ['red', 'orange']  // Example colors
+            }]
+        },
+        options: {
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                }
+            },
+            scales: {
+                y: {
+                    min: 0,
+                    max: 10,
+                    ticks: {
+                        stepSize: 2
+                    }
+                }
+            }
+        }
+    });
+
+    // Campaign Status
+    const campaignStatusCtx = document.getElementById('campaignStatusChart').getContext('2d');
+    const campaignStatusChart = new Chart(campaignStatusCtx, {
+        type: 'pie',
+        data: {
+            labels: ['Public', 'Private'],
+            datasets: [{
+                data: [{{ public_campaigns }}, {{ private_campaigns }}],
+                backgroundColor: ['blue', 'green']
+            }]
+        },
+        options: {
+            maintainAspectRatio: false
+        }
+    });
+
+    
+    const campaignsByNicheCtx = document.getElementById('campaignsByNicheChart').getContext('2d');
+    const campaignsByNicheChart = new Chart(campaignsByNicheCtx, {
+        type: 'pie',
+        data: {
+            labels: [{% for niche, count in campaigns_by_niche %}'{{ niche }}',{% endfor %}],
+            datasets: [{
+                label: 'Campaigns',
+                data: [{% for niche, count in campaigns_by_niche %}{{ count }},{% endfor %}],
+                backgroundColor: ['blue', 'green','grey','white','purple','violet']
+            }]
+        },
+        options: {
+            maintainAspectRatio: false
+        }
+    });
+    // Ad Requests Status
+    const adRequestsStatusCtx = document.getElementById('adRequestsStatusChart').getContext('2d');
+    const adRequestsStatusChart = new Chart(adRequestsStatusCtx, {
+        type: 'pie',
+        data: {
+            labels: ['Pending', 'Accepted', 'Rejected'],
+            datasets: [{
+                data: [{{ pending_ad_requests }}, {{ accepted_ad_requests }}, {{ rejected_ad_requests }}],
+                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56']
+            }]
+        },
+        options: {
+            maintainAspectRatio: false
+        }
+    });
+
+    // Ad Requests by Influencer
+    const adRequestsByInfluencerCtx = document.getElementById('adRequestsByInfluencerChart').getContext('2d');
+    const adRequestsByInfluencerChart = new Chart(adRequestsByInfluencerCtx, {
+        type: 'bar',
+        data: {
+            labels: [{% for influencer_id, count in ad_requests_by_influencer %}'Influencer {{ influencer_id }}',{% endfor %}],
+            datasets: [{
+                label: 'Ad Requests',
+                data: [{% for influencer_id, count in ad_requests_by_influencer %}{{ count }},{% endfor %}],
+                backgroundColor: '#36A2EB'
+            }]
+        },
+        options: {
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                }
+            },
+            scales: {
+                y: {
+                    min: 0,
+                    max: 10,
+                    ticks: {
+                        stepSize: 2
+                    }
+                }
+            }
+        }
+    });
+</script>
+{% endblock script %}
+
+{% block style %}
+<style>
+    body {
+        background: linear-gradient(135deg, #010515 0%, #220341e5 100%);
+            color: #fff;
+      }
+    h3{
+        margin-top: 20px;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    h4{
+        margin-top: 30px;
+     
+    }
+    .chart-container {
+        position: relative;
+        height: 300px;
+        width: 400px;
+    }
+</style>
+{% endblock style %}

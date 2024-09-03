@@ -1,0 +1,73 @@
+{% extends 'ifndash.html' %}
+
+
+{% block content %}
+<div class="container mt-4">
+    <h4 class="text-center mb-4">Ad Request Details</h4>
+    
+    <div class="card mx-auto" style="max-width: 600px;">
+        <div class="card-body text-center">
+            <h5 class="card-title">Ad Name: {{ ad_request.ad_name }}</h5>
+            <p class="card-text"><strong>Description:</strong> {{ ad_request.description }}</p>
+            <p class="card-text"><strong>Terms:</strong> {{ ad_request.terms }}</p>
+            <p class="card-text"><strong>Payment Amount:</strong> ${{ ad_request.payment_amount }}</p>
+            <p class="card-text"><strong>Status:</strong>
+                <span class="status-text"
+                    {% if ad_request.status == 'pending' %}style="background-color: orange;"{% endif %}
+                    {% if ad_request.status == 'accepted' %}style="background-color: lightgreen;"{% endif %}
+                    {% if ad_request.status == 'rejected' %}style="background-color: lightcoral;"{% endif %}
+                >
+                    {{ ad_request.status }}
+                </span>
+            </p>
+            
+            {% if ad_request.by_sponsor %}
+                <p class="card-text"><strong>Sent to:</strong> {{ ad_request.influencer.user.username }}</p>
+            {% else %}
+                <p class="card-text"><strong>Received from:</strong> {{ ad_request.influencer.user.username }}</p>
+            {% endif %}
+            
+            <p class="card-text"><strong>Campaign:</strong> {{ ad_request.campaign.name }}</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block style %}
+<style>
+    body {
+        background: linear-gradient(135deg, #010515 0%, #220341e5 100%);
+            color: #fff;
+      }
+    h4 {
+        margin-top: 10px;
+        text-align: center;
+    }
+    
+    .status-text {
+        padding: 3px 10px;
+        border-radius: 5px;
+        display: inline-block;
+    }
+    
+    .card {
+        margin-top: 20px;
+        border-radius: 10px;
+        
+    }
+    
+    .card-body {
+        padding: 20px;
+    }
+    
+    .card-title {
+        font-size: 1.25rem;
+        margin-bottom: 20px;
+    }
+    
+    .card-text {
+        font-size: 1rem;
+        margin-bottom: 15px;
+    }
+</style>
+{% endblock %}

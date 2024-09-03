@@ -1,0 +1,77 @@
+{% extends 'admin_dash.html' %}
+
+{% block title %}
+Sponsor Registeration
+{% endblock %}
+
+{% block content %}
+
+    <h1>Add a Sponsor</h1>
+
+    <div class="container">
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div class="flash-message" role="alert">
+            {% for message in messages %}
+            <p>{{ message }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+    {% endwith %}
+    <br>
+    <form method="POST" >
+        <label form="username" class = "form-label"> Create Username 
+        <input type = "text" name = "username" id="username" class = "form-control" required />
+        </label>
+
+        <label form="name" class = "form-label"> Company/Individual Name 
+        <input type = "text" name = "name" id="username" class = "form-control" required/>
+        </label>
+        
+        <label form="industry" class = "form-label"> Industry
+        <input type = "text" name = "industry" id="industry" class = "form-control" required />
+        </label>
+        
+        
+        
+        <label form="password" class = "form-label"> Password 
+        <input type = "password" name = "password" id="password" class = "form-control" required />
+        </label>
+
+        <label form="repassword" class = "form-label"> Confirm Password 
+        <input type = "password" name = "repassword" id="repassword" class = "form-control" required/>
+        </label>
+        
+        
+
+        <input type="submit" value = "Register" class = "mt-2 btn btn-success">
+
+    </form>
+    {% endblock %}
+
+{% block style %}
+<style>
+  form{
+    display : flex;
+    flex-direction:column ;
+    align-items: center;
+  }
+
+  h1{
+    margin-top: 30px;
+    text-align: center;
+  }
+  .flash-message {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 5px; 
+    text-align: center;
+    margin: 10px auto; 
+    border: 1px solid #f5c6cb;
+    border-radius: 10px;
+    width: 80%; 
+    max-width: 400px; 
+}
+</style>
+{% endblock %}
+

@@ -1,0 +1,73 @@
+{% extends 'admin_dash.html' %}
+
+{% block content %}
+
+
+<h3>Create a New Campaign</h3>
+<br>
+<form method="POST">
+    <label form="title" class = "form-label"> Title 
+    <input type = "text" name = "title" id="title" class = "form-control" required />
+    </label>
+
+    <label form="description" class = "form-label"> Description 
+      <input type = "text" name = "description" id="username" class = "form-control" required/>
+      </label>
+    
+    <label form="niche" class = "form-label"> Niche
+      <input type = "text" name = "niche" id="niche" class = "form-control" required />
+      </label>
+    
+    <label form="start_date" class = "form-label"> Start Date 
+    <input type = "date" name = "start_date" id="start_date" class = "form-control" required />
+    </label>
+
+    <label form="end_date" class = "form-label"> End Date 
+    <input type = "date" name = "end_date" id="end_date" class = "form-control" required />
+    </label>
+    
+    <label form="budget" class = "form-label"> Budget 
+    <input type = "number" name = "budget" id="end_date" class = "form-control" required />
+    </label>
+    
+
+    <input type="submit" value = "Create" class = "mt-2 btn btn-success">
+
+</form>
+
+
+
+{% endblock content %}
+
+{% block style %}
+<style>
+  form{
+    display : flex;
+    flex-direction:column ;
+    align-items: center;
+  }
+
+  h1{
+    margin-top: 30px;
+    text-align: center;
+  }
+  h3{
+    margin-top: 10px;
+    text-align: center;
+  }
+  p{
+    
+    text-align: center;
+  }
+  .flash-message {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 5px;
+    text-align: center;
+    margin: 5px auto;
+    border: 1px solid #f5c6cb;
+    border-radius: 5px;
+    width: fit-content;
+
+</style>
+{% endblock %}

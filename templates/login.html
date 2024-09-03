@@ -1,0 +1,97 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+User Login
+{% endblock %}
+
+{% block content %}
+<div class="d-flex align-items-center justify-content-center vh-100">
+    <div class="d-flex justify-content-between align-items-center">
+        <!-- Logo container increased in size and adjusted to be inline with the form -->
+        <div class="logo-container me-5">
+            <img src="/static/images/Logo.jpg" alt="Site Logo" class="img-fluid rounded-circle shadow custom-img">
+        </div>
+        <!-- Login card adjusted to align horizontally with the logo -->
+        <div class="card border-0 shadow-lg custom">
+            <div class="card-body p-5">
+                <h1 class="text-center mb-4 display-4 font-weight-light">Login</h1>
+                <form method="POST">
+                    <div class="form-group mb-3">
+                        <input type="text" name="username" id="username" class="form-control form-control-lg border-0 shadow-sm" placeholder="Username" required>
+                    </div>
+                    <div class="form-group mb-4">
+                        <input type="password" name="password" id="password" class="form-control form-control-lg border-0 shadow-sm" placeholder="Password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-lg btn-block shadow-sm">Login</button>
+                </form>
+            </div>
+            <div class="card-footer text-center bg-transparent">
+                <p class="small mb-0">New to our platform?</p>
+                <a href="/sponsor/registration" class="btn btn-link text-primary">Sponsor Signup</a>
+                <a href="/influencer/registration" class="btn btn-link text-primary">Influencer Signup</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block style %}
+<style>
+    body, html {
+        height: 100%;
+        margin: 0;
+        font-family: 'Helvetica Neue', Arial, sans-serif;
+        background: linear-gradient(135deg, #010515 0%, #220341e5 100%);
+        color: #fff;
+    }
+    .vh-100 {
+        height: 100vh;
+    }
+    .custom-img {
+        width:550px; /* Increased size for better visibility */
+        height: auto;
+    }
+    .logo-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .card {
+        background-color: #fff;
+        border-radius: 1rem;
+        width: 100%;
+        max-width: 400px; /* Ensuring the form does not stretch too wide */
+    }
+    .card-body {
+        padding: 2rem;
+    }
+    .form-control {
+        background-color: #e9ecef;
+        border-radius: 0.5rem;
+        height: 50px;
+        font-size: 16px;
+    }
+    .btn-primary {
+        background-color: #007bff;
+        border: none;
+        border-radius: 0.5rem;
+        padding: 10px 0;
+        width: 100%;
+    }
+    .btn-link {
+        text-decoration: none;
+        font-weight: bold;
+    }
+    .btn-link:hover {
+        color: #0056b3;
+    }
+    .card-footer {
+        background-color: transparent;
+        border-top: 0;
+    }
+    .custom{
+        background-color: rgba(0, 0, 0, 0.822);
+        color: white;
+    }
+</style>
+{% endblock %}

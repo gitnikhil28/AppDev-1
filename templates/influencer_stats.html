@@ -1,0 +1,100 @@
+{% extends 'ifndash.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h4 class="mb-4">Statistics</h4>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Total Earnings</h5>
+                    <p class="card-text">${{ total_earnings }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Active Campaigns</h5>
+                    <p class="card-text">{{ active_campaigns_count }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-12"> 
+            <h5>Earnings per Campaign</h5>
+            <div class="chart-container">
+                <canvas id="earningsChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <h5>Ad Request Status</h5>
+            <div class="chart-container">
+                <canvas id="adRequestStatusChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block script %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Earnings Chart
+    const earningsCtx = document.getElementById('earningsChart').getContext('2d');
+const earningsChart = new Chart(earningsCtx, {
+    type: 'bar',
+    data: {
+        labels: {{ campaign_names|tojson }},
+        datasets: [{
+            label: 'Earnings',
+            data: {{ campaign_earnings|tojson }},
+            backgroundColor: 'lightblue',
+            barPercentage: 0.35,  // Adjust this value to reduce bar thickness
+            categoryPercentage: 0.35  // Adjust this value to reduce the space between bars
+        }]
+    },
+    options: {
+        
+    }
+});
+
+    // Ad Request Status Chart
+    const adRequestStatusCtx = document.getElementById('adRequestStatusChart').getContext('2d');
+    const adRequestStatusChart = new Chart(adRequestStatusCtx, {
+        type: 'pie', // or 'bar' if you prefer
+        data: {
+            labels: ['Pending', 'Accepted', 'Rejected'],
+            datasets: [{
+                data: {{ ad_request_status_counts|tojson }},
+                backgroundColor: ['orange', 'lightgreen', 'lightcoral']
+            }]
+        },
+        options: {
+            
+        }
+    });
+</script>
+{% endblock script %}
+
+{% block style %}
+<style>
+    body{
+        background: linear-gradient(135deg, #010515 0%, #220341e5 100%);
+        color: #fff;
+    }
+    
+    .chart-container {
+        position: relative;
+        height: 300px;
+        width: 100%; 
+    }
+</style>
+{% endblock style %}

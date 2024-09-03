@@ -1,0 +1,106 @@
+{% extends 'spndash.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h3 class="text-center mb-4">Create a New Campaign</h3>
+
+    <form method="POST" class="campaign-form">
+        <div class="form-group">
+            <label for="title" class="form-label">Title:</label>
+            <input type="text" name="title" id="title" class="form-control" required value="{{ request.form.get('title', '') }}"/>
+        </div>
+
+        <div class="form-group">
+            <label for="description" class="form-label">Description:</label>
+            <input type="text" name="description" id="description" class="form-control" required value="{{ request.form.get('description', '') }}"/>
+        </div>
+
+        <div class="form-group">
+          <label for="visibility" class="form-label">Visibility:</label>
+          <select name="visibility" id="visibility" class="form-select" required>
+              <option value="public" {% if request.form.get('visibility', '') == 'public' %}selected{% endif %}>Public</option>
+              <option value="private" {% if request.form.get('visibility', '') == 'private' %}selected{% endif %}>Private</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="niche" class="form-label">Niche:</label>
+            <select name="niche" id="niche" class="form-select" required>
+                {% for option in niche_options %}
+                    <option value="{{ option }}" {% if request.form.get('niche', '') == option %}selected{% endif %}>{{ option }}</option>
+                {% endfor %}
+                {% if request.form.get('niche') == 'Other' %}
+                <option value="{{ request.form.get('otherNiche', '') }}" selected>
+                    {{ request.form.get('otherNiche', 'Other') }}
+                </option>
+                {% endif %}
+            </select>
+        </div>
+
+        <div id="otherNicheInput" {% if request.form.get('niche') == 'Other' %}style="display: block;"{% else %}style="display: none;"{% endif %}>
+            <div class="form-group">
+                <label for="otherNiche" class="form-label">Please specify your niche:</label>
+                <input type="text" name="otherNiche" id="otherNiche" class="form-control" value="{{ request.form.get('otherNiche', '') }}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="start_date" class="form-label">Start Date:</label>
+            <input type="date" name="start_date" id="start_date" class="form-control" required value="{{ request.form.get('start_date', '') }}"/>
+        </div>
+
+        <div class="form-group">
+            <label for="end_date" class="form-label">End Date:</label>
+            <input type="date" name="end_date" id="end_date" class="form-control" required value="{{ request.form.get('end_date', '') }}"/>
+        </div>
+
+        <div class="form-group">
+            <label for="budget" class="form-label">Budget:</label>
+            <input type="number" name="budget" id="budget" class="form-control" required value="{{ request.form.get('budget', '') }}"/>
+        </div>
+
+        <button type="submit" class="btn btn-success w-100">Create</button>
+    </form>
+</div>
+{% endblock content %}
+
+{% block style %}
+<style>
+  body {
+    background: linear-gradient(135deg, #010515 0%, #220341e5 100%);
+        color: #fff;
+  }
+  .container {
+    max-width: 400px; /* Adjust width for compact form */
+    margin: 0 auto;
+  }
+
+  h3 {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-size: 1.5rem; 
+  }
+
+  .form-group {
+    margin-bottom: 15px; 
+    width: 100%;
+  }
+
+  .form-label {
+    display: block;
+    margin-bottom: 5px; 
+    font-size: 0.875rem; 
+  }
+
+  .form-control, .form-select {
+    width: 100%;
+    padding: 8px; 
+    font-size: 0.875rem; 
+  }
+
+  .btn {
+    padding: 10px;
+    font-size: 0.875rem; 
+  }
+</style>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends 'admin_dash.html' %}
+
+
+{% block content %}
+
+<h4 class="mb-5">Campaign Details</h4>
+<div class="center-container">
+ <ol class="center-list">
+   <li><strong>Campaign ID: </strong> {{ campaign.id }}</li>
+   <li><strong>Sponsor ID: </strong> {{ campaign.sponsor_id }}</li>
+   <li><strong>Description: </strong> {{ campaign.description }}</li>
+   <li><strong>Niche: </strong> {{ campaign.niche }}</li>
+   <li><strong>Start Date: </strong> {{ campaign.start_date }}</li>
+   <li><strong>End Date: </strong> {{ campaign.end_date }}</li>
+   <li><strong>Budget: </strong> {{ campaign.budget }}</li>
+   <li><strong>Goals: </strong> {{ campaign.goals }}</li>
+   <li><strong>Visibility: </strong> {{ campaign.visibility }}</li>
+ </ol>
+</div>
+<div class="text-center">
+ <a href="{{ url_for('admin_campaigns') }}" class="btn btn-secondary mt-2">Back to Campaign List</a>
+</div>
+{% endblock content %}
+
+{% block style %}
+<style>
+  body {
+    background: linear-gradient(135deg, #010515 0%, #220341e5 100%);
+        color: #fff;
+  }
+  .center-container{
+    display : flex;
+    flex-direction:column ;
+    align-items: center;
+  } 
+  h4{
+  text-align: center;
+  }
+
+</style>
+{% endblock %}
