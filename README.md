@@ -1,110 +1,45 @@
-Influencer-Sponsor Coordination Platform
+# Influencer-Sponsor Coordination Platform (Version 1)
+
 This platform streamlines the process of connecting influencers with sponsors for mutually beneficial collaborations.
 
-Features
-User Roles:
+## Features
 
-Sponsors: Create and manage campaigns, search and filter influencers, send and manage ad requests.
-Influencers: Search for campaigns, manage ad requests (accept, reject, negotiate), edit profiles with picture uploads.
-Admins: Oversee users, campaigns, and platform activity through an admin dashboard.
-Campaign Management:
+* **User Roles:**
+   * **Sponsors:** Create and manage campaigns, search and filter influencers, send and manage ad requests.
+   * **Influencers:** Search for campaigns, manage ad requests (accept, reject, negotiate), edit profiles with picture uploads.
+   * **Admins:** Oversee users, campaigns, and platform activity through an admin dashboard.
 
-Sponsors can create, edit, and delete campaigns.
-Campaigns have customizable details like niche, budget, and visibility (public or private).
-Influencer Search:
+* **Campaign Management:**
+   * Sponsors can create, edit, and delete campaigns.
+   * Campaigns have customizable details like niche, budget, and visibility (public or private).
 
-Sponsors can search and filter influencers based on niche, reach, and name/username.
-Influencers can search and filter public campaigns.
-Ad Requests:
+* **Influencer Search:**
+   * Sponsors can search and filter influencers based on niche, reach, and name/username.
+   * Influencers can search and filter public campaigns.
 
-Sponsors and influencers can initiate ad requests.
-Influencers can negotiate payment amounts.
-Both parties can accept or reject ad requests.
-Profile Management:
+* **Ad Requests:**
+   * Sponsors and influencers can initiate ad requests.
+   * Influencers can negotiate payment amounts.
+   * Both parties can accept or reject ad requests.
 
-Users can view and edit their profiles.
-Influencers can upload profile pictures.
-Admin Control:
+* **Profile Management:**
+   * Users can view and edit their profiles.
+   * Influencers can upload profile pictures.
 
-Admins can manage users, campaigns, and ad requests.
-Admins have access to statistics and can flag/unflag users and campaigns.
-Background Jobs:
+* **Admin Control:**
+   * Admins can manage users, campaigns, and ad requests.
+   * Admins have access to statistics and can flag/unflag users and campaigns.
 
-Daily reminders to influencers about pending ad requests or new campaigns.
-Monthly activity reports for sponsors.
-CSV Export:
+## Technology Stack
 
-Sponsors can export campaign data in CSV format.
-Technology Stack
-Frontend: Vue.js, Bootstrap
-Backend: Flask, SQLAlchemy
-Database: SQLite
-Caching: Redis
-Background Tasks: Celery
-Other: Werkzeug (password hashing, file uploads)
-Installation
-Clone the repository:
+* **Frontend:** HTML, CSS, Bootstrap, Jinja2 templates
+* **Backend:** Flask, SQLAlchemy
+* **Database:** SQLite
+* **Other:** Werkzeug (password hashing, file uploads)
 
-Bash
-git clone https://github.com/gitnikhil18/AppDev-1.git
-Use code with caution.
+## Installation
 
-Navigate to the backend directory:
+1. **Clone the repository:**
 
-Bash
-cd backend
-Use code with caution.
-
-Create and activate a virtual environment:
-
-Bash
-python -m venv venv
-source venv/bin/activate  # On macOS/Linux
-venv\Scripts\activate   
-      # On Windows
-Use code with caution.
-
-Install dependencies:
-
-Bash
-pip install -r requirements.txt
-Use code with caution.
-
-Set up the database:
-
-Bash
-flask db init
-flask db migrate
-flask db upgrade   
-
-Use code with caution.
-
-Navigate to the frontend directory:
-
-Bash
-cd ../frontend
-Use code with caution.
-
-Install frontend dependencies:
-
-Bash
-npm install
-Use code with caution.
-
-Build the frontend:
-
-Bash
-npm run build
-Use code with caution.
-
-Copy the frontend build to the backend:
-
-Copy the contents of the frontend/dist folder into the backend/templates folder.
-Run the Flask development server:
-
-Bash
-cd ../backend
-flask run
-Use code with caution.
-
-Access the application: Open your web browser and go to http://localhost:5000.
+   ```bash
+   git clone [https://github.com/gitnikhil28/AppDev-1.git](https://github.com/gitnikhil28/AppDev-1.git)
