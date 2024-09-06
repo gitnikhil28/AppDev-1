@@ -809,7 +809,7 @@ def handle_ad_request_inf(ad_request_id):
         flash('Invalid action.', 'danger')
 
     db.session.commit()
-    return redirect(url_for('view_ad_request_inf'))  
+    return redirect(url_for('view_ad_request_inf',ad_request_id = ad_request.id))  
 
 def campaign_progress(campaign):
     start_date = campaign.start_date 
