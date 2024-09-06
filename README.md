@@ -43,3 +43,6 @@ This platform streamlines the process of connecting influencers with sponsors fo
 
    ```bash
    git clone [https://github.com/gitnikhil28/AppDev-1.git](https://github.com/gitnikhil28/AppDev-1.git)
+
+<!-- git pull --rebase origin main
+git push -u origin main -->
